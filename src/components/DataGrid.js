@@ -1,8 +1,12 @@
 import React from "react";
 import StatusBadge from "../utils/StatusBadge";
 import SpaceShip1 from "../styling/images/spaceship1.gif";
+import Error from "../extra/Error";
+import Loading from "../extra/Loading";
 
 const DataGrid = ({ onSelectCapsule }) => {
+  const isLoading = false;
+  const error = null;
   const capsules = [
     {
       capsule_serial: "C101",
@@ -64,6 +68,14 @@ const DataGrid = ({ onSelectCapsule }) => {
       reuse_count: 0,
     },
   ];
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <Error error={error} />;
+  }
 
   if (capsules.length === 0) {
     return (
