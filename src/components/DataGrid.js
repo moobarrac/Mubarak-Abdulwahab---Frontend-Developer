@@ -1,80 +1,50 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchSpaceXData,
+  firstPage,
+  nextPage,
+  previousPage,
+} from "../features/spaceXSlice";
 import StatusBadge from "../utils/StatusBadge";
 import SpaceShip1 from "../styling/images/spaceship1.gif";
 import Error from "../extra/Error";
 import Loading from "../extra/Loading";
 
 const DataGrid = ({ onSelectCapsule }) => {
-  const isLoading = false;
-  const error = null;
-  const capsules = [
-    {
-      capsule_serial: "C101",
-      capsule_id: "dragon1",
-      status: "retired",
-      original_launch: "2010-12-08T15:43:00.000Z",
-      missions: [
-        {
-          name: "COTS 1",
-          flight: 7,
-        },
-      ],
-      landings: 0,
-      type: "Dragon 1.0",
-      details: "Reentered after three weeks in orbit",
-      reuse_count: 0,
-    },
-    {
-      capsule_serial: "C102",
-      capsule_id: "dragon1",
-      status: "retired",
-      original_launch: "2012-05-22T03:44:00.000Z",
-      missions: [
-        {
-          name: "COTS 2",
-          flight: 8,
-        },
-      ],
-      landings: 1,
-      type: "Dragon 1.0",
-      details: "First Dragon spacecraft to dock with the ISS",
-      reuse_count: 0,
-    },
-    {
-      capsule_serial: "C103",
-      capsule_id: "dragon1",
-      status: "active",
-      original_launch: "2014-09-21T05:52:00.000Z",
-      missions: [
-        {
-          name: "CRS-4",
-          flight: 14,
-        },
-      ],
-      landings: 1,
-      type: "Dragon 1.1",
-      details: "Carried science and research to the ISS",
-      reuse_count: 1,
-    },
-    {
-      capsule_serial: "C104",
-      capsule_id: "dragon1",
-      status: "unknown",
-      original_launch: null,
-      missions: [],
-      landings: 0,
-      type: "Dragon 1.1",
-      details: "Scheduled for future missions",
-      reuse_count: 0,
-    },
-  ];
+  // Accessing state from the Redux store
+  const { capsules, isLoading, error, pagination } = useSelector(
+    (state) => state.spaceX
+  );
+  const dispatch = useDispatch();
+
+  // Fetch data when component mounts or pagination changes
+  useEffect(() => {
+    dispatch(fetchSpaceXData());
+  }, [dispatch, pagination.offset]);
+
+  // Handler functions for pagination
+  const handleNextPage = () => {
+    dispatch(nextPage());
+  };
+
+  const handlePreviousPage = () => {
+    dispatch(previousPage());
+  };
+
+  const loadSpaceXData = () => {
+    dispatch(firstPage());
+    dispatch(fetchSpaceXData());
+  };
 
   if (isLoading) {
     return <Loading />;
   }
 
   if (error) {
-    return <Error error={error} />;
+    return (
+      <Error onButtonClick={() => dispatch(fetchSpaceXData())} error={error} />
+    );
   }
 
   if (capsules.length === 0) {
@@ -84,7 +54,10 @@ const DataGrid = ({ onSelectCapsule }) => {
         data-testid="no-capsules-message"
       >
         <p className="text-white text-2xl">No capsules found.</p>
-        <button className="rounded py-2 px-4 font-bold text-gray-900 bg-white">
+        <button
+          className="rounded py-2 px-4 font-bold text-gray-900 bg-white"
+          onClick={() => loadSpaceXData()}
+        >
           Refresh
         </button>
       </div>
@@ -122,6 +95,22 @@ const DataGrid = ({ onSelectCapsule }) => {
               />
             </div>
           ))}
+        </div>
+        <div className="z-999 flex justify-center mt-8 mb-16">
+          <button
+            onClick={handlePreviousPage}
+            className="px-4 py-2 mr-2 bg-gray-800 text-white rounded hover:bg-gray-600 disabled:bg-gray-300"
+            disabled={pagination.offset === 0}
+          >
+            Previous
+          </button>
+          <button
+            onClick={handleNextPage}
+            className="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-600 disabled:bg-gray-300"
+            // disabled={pagination.offset + pagination.limit >= pagination.total}
+          >
+            Next
+          </button>
         </div>
       </section>
     </>
