@@ -22,7 +22,10 @@ const SearchForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-center my-8 mb-16 animate-opacity">
+    <div
+      className="flex flex-col items-center my-8 mb-16 animate-opacity"
+      id="explore_page"
+    >
       <h2 className="text-xl md:text-2xl lg:text-3xl text-center text-white font-bold mb-4 uppercase">
         Filter Capsules
       </h2>
@@ -39,7 +42,7 @@ const SearchForm = () => {
             <option value="active">Active</option>
             <option value="retired">Retired</option>
             <option value="unknown">Unknown</option>
-            <option value="destryed">Destryed</option>
+            <option value="destroyed">Destryed</option>
           </select>
 
           {/* Original Launch Input */}
