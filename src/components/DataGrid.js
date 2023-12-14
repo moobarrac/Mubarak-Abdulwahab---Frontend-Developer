@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  clearFilter,
   fetchSpaceXData,
   firstPage,
   nextPage,
@@ -33,6 +34,7 @@ const DataGrid = ({ onSelectCapsule }) => {
   };
 
   const loadSpaceXData = () => {
+    dispatch(clearFilter());
     dispatch(firstPage());
     dispatch(fetchSpaceXData());
   };

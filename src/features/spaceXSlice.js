@@ -24,6 +24,9 @@ const spaceXSlice = createSlice({
       const { filterName, value } = action.payload;
       state.filters[filterName] = value;
     },
+    clearFilter: (state) => {
+      state.filters = { status: "", original_launch: "", type: "" };
+    },
     nextPage: (state) => {
       state.pagination.offset += state.pagination.limit;
     },
@@ -78,6 +81,6 @@ export const fetchSpaceXData = createAsyncThunk(
   }
 );
 
-export const { updateFilter, previousPage, nextPage, firstPage } =
+export const { updateFilter, previousPage, nextPage, firstPage, clearFilter } =
   spaceXSlice.actions;
 export default spaceXSlice.reducer;
