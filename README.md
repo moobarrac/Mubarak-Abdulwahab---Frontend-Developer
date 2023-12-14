@@ -1,5 +1,11 @@
 # SpaceX Capsule Explorer
 
+SpaceX Capsule Explorer is an interactive web application that allows users to explore information about SpaceX's various capsules. This application utilizes the SpaceX API for data retrieval and provides functionalities like filtering, detailed views, and more.
+
+## Video Walkthrough
+
+For a detailed demonstration of the app's functionality and features, check out this [video walkthrough](https://www.loom.com/share/f91173576659455e84636327323167b6?sid=c1ddaad1-bd5d-43ca-ba58-7e05b6c04b62).
+
 ## Installation and Setup
 
 ### Frontend
@@ -14,6 +20,15 @@
 2. **Run the Frontend Application:**
    ```bash
    npm start
+   ```
+
+### Testing
+
+1. **Run test cases:**
+   Navigate to your repository and run the test command:
+
+   ```bash
+   npm test
    ```
 
 ### Backend
@@ -35,4 +50,4 @@
 
 ## Known Issues
 
-- The API pagination feature is currently not working as expected. The pagination offset and limits is not working as expected, return wrong number of capsules
+- The API pagination feature is currently not working as expected. The pagination offset and limit is not working as expected, return wrong number of capsules
