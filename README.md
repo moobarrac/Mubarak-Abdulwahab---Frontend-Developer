@@ -34,7 +34,7 @@ For a detailed demonstration of the app's functionality and features, check out 
 ### Backend
 
 1. **Setting Up the PHP Backend:**
-   Navigate to the backend directory.
+   Navigate to the app directory.
 
 2. **Run the PHP Server:**
    ```bash
